@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://yfr1cnm4afej"]
+
+[ext_resource type="PackedScene" uid="uid://dwtjuhn1hgd3m" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://huob7cwdgkgt" path="res://scenes/green-slime.tscn" id="2_yqjtg"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="green-slime" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(120, 8)
+
+[node name="green-slime2" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(106, 23)
