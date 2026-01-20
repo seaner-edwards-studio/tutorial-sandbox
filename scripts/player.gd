@@ -1,10 +1,7 @@
 extends CharacterBody2D
 
-@onready var player_animation_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var cast_fire_1: AudioStreamPlayer2D = $CastFire1
-@onready var fire_1_hitbox: Area2D = $Fire1Hitbox
-@onready var collision_shape_2d: CollisionShape2D = $Fire1Hitbox/CollisionShape2D
-
+@onready var animation: AnimatedSprite2D = $animation
+@onready var cast_fire_1: AudioStreamPlayer2D = $cast_fire_1
 
 const SPEED = 130.0
 var last_direction: Vector2 = Vector2.DOWN
@@ -13,14 +10,12 @@ var spellcast_hitbox_offset: Vector2
 
 func _ready() -> void:
 	# Initialize hitbox offset
-	spellcast_hitbox_offset = fire_1_hitbox.position
+	print("INFO: player initialized")
+
 
 func _physics_process(_delta: float) -> void:	
-	# Disable hitbox until a spell is triggered
-	# TODO: This will change when spells do the checking
-	fire_1_hitbox.monitoring = false
-	
 	if Input.is_action_just_pressed("cast_spell") and not is_casting:
+		print("PROCESS")
 		cast_spell()
 	
 	if is_casting:
@@ -41,8 +36,7 @@ func handle_movement() -> void:
 	
 	if direction != Vector2.ZERO:
 		velocity = direction * SPEED
-		last_direction = direction
-		update_hitbox_offset()
+		last_direction = direction		
 	else:
 		velocity = Vector2.ZERO
 	
@@ -58,20 +52,19 @@ func process_animation() -> void:
 # Determines the animation direction, relying on prefix to select animation type
 func play_animation(dir: Vector2, prefix: String) -> void:
 	if dir.x > 0:
-		player_animation_sprite.play(prefix + "_right")
+		animation.play(prefix + "_right")
 	elif dir.x < 0:
-		player_animation_sprite.play(prefix + "_left")
+		animation.play(prefix + "_left")
 	elif dir.y > 0:
-		player_animation_sprite.play(prefix + "_down")
+		animation.play(prefix + "_down")
 	elif dir.y < 0:
-		player_animation_sprite.play(prefix + "_up")
+		animation.play(prefix + "_up")
 
 ####################################################################################################
 # Attacks and spell casting
 ####################################################################################################
 func cast_spell() -> void:
-	is_casting = true
-	fire_1_hitbox.monitoring = true
+	is_casting = true	
 	cast_fire_1.play()
 	play_animation(last_direction, "cast")
 
@@ -83,26 +76,3 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 ####################################################################################################
 # Hitbox
 ####################################################################################################
-
-func update_hitbox_offset() -> void:
-	var x = spellcast_hitbox_offset.x
-	var y = spellcast_hitbox_offset.y
-	
-	# TODO: Need to find a way to condtionally rotate
-	# the verticals because the hitbox is a line, not
-	# a square
-	match last_direction:
-		Vector2.LEFT:
-			fire_1_hitbox.position = Vector2(-x,y)
-		Vector2.RIGHT:
-			fire_1_hitbox.position = Vector2(x,y)
-		Vector2.UP:			
-			fire_1_hitbox.position = Vector2(y,-x)
-		Vector2.DOWN:
-			fire_1_hitbox.position = Vector2(-y,x)
-
-
-func _on_fire_1_hitbox_body_entered(body: Node2D) -> void:
-		if is_casting and body.name.begins_with("green-slime"):
-			print("HIT")
-			print(body.name)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://huob7cwdgkgt"]
 
-[ext_resource type="Texture2D" uid="uid://dqqkudyow5ssx" path="res://assets/sprites/green-slime.png" id="1_yn4sk"]
+[ext_resource type="Texture2D" uid="uid://dqqkudyow5ssx" path="res://assets/sprites/green_slime.png" id="1_yn4sk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8vce6"]
 atlas = ExtResource("1_yn4sk")
@@ -158,12 +158,12 @@ size = Vector2(23.5, 13)
 
 [node name="green-slime" type="CharacterBody2D"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p2qxo")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.5711796
+frame_progress = 0.82601905
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(-0.25, -1.5)
 shape = SubResource("RectangleShape2D_yn4sk")

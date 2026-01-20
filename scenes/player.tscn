@@ -1,8 +1,8 @@
-[gd_scene load_steps=46 format=3 uid="uid://dwtjuhn1hgd3m"]
+[gd_scene load_steps=45 format=3 uid="uid://dwtjuhn1hgd3m"]
 
 [ext_resource type="Script" uid="uid://cfgj0s313fdyy" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://6ijlrl6cpbcw" path="res://assets/sprites/hero.png" id="2_g2els"]
-[ext_resource type="AudioStream" uid="uid://cbm3tmdfy178v" path="res://assets/sfx/fire1.wav" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://cbm3tmdfy178v" path="res://assets/sfx/fire-1.wav" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
 atlas = ExtResource("2_g2els")
@@ -347,26 +347,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
-size = Vector2(58, 10)
-
 [node name="player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_g2els")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y4r1p")
 animation = &"move_right"
 
-[node name="CastFire1" type="AudioStreamPlayer2D" parent="."]
+[node name="cast_fire_1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qhqgy")
 
-[node name="Fire1Hitbox" type="Area2D" parent="."]
-position = Vector2(29, 5)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fire1Hitbox"]
-shape = SubResource("RectangleShape2D_qhqgy")
-
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="Fire1Hitbox" to="." method="_on_fire_1_hitbox_body_entered"]
+[connection signal="animation_finished" from="animation" to="." method="_on_animated_sprite_2d_animation_finished"]
