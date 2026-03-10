@@ -4,8 +4,7 @@ const SPEED = 300.0
 
 func _physics_process(_delta: float) -> void:
 	### DEBUG - REMOVE THIS AND REPLACE WITH FIXED MOVEMENT
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	print("FIREBALL DIRECTION: " + str(direction))
+	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")	
 	if direction != Vector2.ZERO:
 		velocity = direction * SPEED
 	else:

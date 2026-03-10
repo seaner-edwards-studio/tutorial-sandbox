@@ -3,7 +3,9 @@ extends CharacterBody2D
 @onready var animation: AnimatedSprite2D = $animation
 @onready var cast_fire_1: AudioStreamPlayer2D = $cast_fire_1
 
+const FIRE_BOLT = preload("uid://bwury1hcgearx")
 const SPEED = 130.0
+
 var last_direction: Vector2 = Vector2.DOWN
 var is_casting: bool = false
 var spellcast_hitbox_offset: Vector2
@@ -14,8 +16,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:	
-	if Input.is_action_just_pressed("cast_spell") and not is_casting:
-		print("PROCESS")
+	if Input.is_action_just_pressed("cast_spell") and not is_casting:		
 		cast_spell()
 	
 	if is_casting:
@@ -67,7 +68,11 @@ func cast_spell() -> void:
 	is_casting = true	
 	cast_fire_1.play()
 	play_animation(last_direction, "cast")
-
+	
+	# SED TODO: Spawn the firebolt on the player, not the parent
+	var fireBolt = FIRE_BOLT.instantiate()
+	get_parent().add_child(fireBolt)
+	
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if is_casting:
